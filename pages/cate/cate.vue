@@ -1,5 +1,7 @@
 <template>
   <view>
+    <!-- 使用自定义组件搜索框 -->
+    <my-search @click="gotoSearch"></my-search>
     <!-- 滚动视图区域 -->
     <view class="scroll-view-container">
       <!-- 左侧滚动视图区域 -->
@@ -76,6 +78,13 @@
         uni.navigateTo({
           url:'/subpkg/goods_list/goods_list?cid='+item2.cat_id
         })
+      },
+      //跳转搜索页面处理函数
+      gotoSearch(){
+        // console.log('ok')
+        uni.navigateTo({
+          url:'/subpkg/search/search'
+        })
       }
     },
     onLoad() {
@@ -85,7 +94,8 @@
       const sysInfo = uni.getSystemInfoSync()
       // console.log(sysInfo)
       //把当前窗口可用高度赋值
-      this.wh = sysInfo.windowHeight
+      // 可用高度 = 屏幕高度 - navigationBar高度 - tabBar高度 - 自定义的search组件高度
+      this.wh = sysInfo.windowHeight-40
     }
   }
 </script>
