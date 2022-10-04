@@ -1,6 +1,6 @@
 <template>
 	<view>
-		{{querys.query}}---商品列表
+		商品列表
 	</view>
 </template>
 
