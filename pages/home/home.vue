@@ -60,7 +60,7 @@
     },
     onLoad(){
       //获取轮播图数据
-      this.getSwiperList();
+    this.getSwiperList();
       //调用方法获取分类导航数据
      this.getNavList();
      //调用方法获取楼层列表数据
@@ -79,7 +79,7 @@
       }
       //请求成功
         this.swiperList=res.message
-        uni.$showMsg('数据请求成功!')
+        // uni.$showMsg('数据请求成功!')
       },
       //获取分类导航数据的方法
       async  getNavList(){

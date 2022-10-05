@@ -19,12 +19,15 @@
       "style": {}
     }, {
       "path": "goods_list/goods_list",
+      "style": {
+        "onReachBottomDistance":150,
+        "enablePullDownRefresh":true,
+        "backgroundColor":"#F1F1F1"
+      }
+    }, {
+      "path": "search/search",
       "style": {}
-    }    ,{
-                    "path" : "search/search",
-                    "style" : {}
-                }
-            ]
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
