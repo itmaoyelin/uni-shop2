@@ -24,7 +24,8 @@
       <view class="goods-fare">快递: 免运费</view>
     </view>
     <!-- 商品详情区域 -->
-    <rich-text :nodes="goods_info.goods_introduce"></rich-text>
+       <view class="goods-detail-bar">--------宝贝详情--------</view>
+       <rich-text :nodes="goods_info.goods_introduce"></rich-text>
     <!-- 商品导航组件区域 -->
     <view class="goods-nav">
       <uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick" @buttonClick="buttonClick" />
@@ -33,7 +34,38 @@
 </template>
 
 <script>
+  // 从 vuex 中按需导出 mapState 辅助方法
+  import {
+    mapState,
+    mapMutations,
+    mapGetters
+  } from 'vuex'
+
   export default {
+    computed: {
+      // 调用 mapState 方法，把 m_cart 模块中的 cart 数组映射到当前页面中，作为计算属性来使用
+      // ...mapState('模块的名称', ['要映射的数据名称1', '要映射的数据名称2'])
+      ...mapState('m_cart', []),
+      // 把 m_cart 模块中名称为 total 的 getter 映射到当前页面中使用
+      ...mapGetters('m_cart', ['total'])
+    },
+    //监听器
+    watch: {
+      //监听total值的变化
+      total: {
+        handler(newValue) {
+          //通过find方法找到购物车对象
+          const findResult = this.options.find((x) => x.text === '购物车')
+          // console.log(findResult)
+          if (findResult) {
+            // 动态为购物车按钮赋值
+            findResult.info = newValue
+          }
+        },
+        // immediate 属性用来声明此侦听器，是否在页面初次加载完毕后立即调用
+        immediate: true
+      }
+    },
     data() {
       return {
         //商品详情对象
@@ -68,6 +100,8 @@
       };
     },
     methods: {
+      // 把 m_cart 模块中的 addToCart 方法映射到当前页面使用
+      ...mapMutations('m_cart', ['addToCart']),
       //获取商品详情信息方法
       async getGoodsInfo(goods_id) {
         const {
@@ -97,19 +131,31 @@
       },
       //底部导航左侧事件处理函数
       onClick(e) {
-       // console.log(e)
-       //跳转购物车页面
-       if(e.content.text==='购物车'){
-         uni.switchTab({
-           url:'/pages/cart/cart'
-         })
-       }
+        // console.log(e)
+        //跳转购物车页面
+        if (e.content.text === '购物车') {
+          uni.switchTab({
+            url: '/pages/cart/cart'
+          })
+        }
       },
       //底部导航左侧按钮事件处理函数
       buttonClick(e) {
-        console.log(e)
-        if(e.content.text==='加入购物车'){
-           this.options[2].info++
+        // console.log(e)
+        if (e.content.text === '加入购物车') {
+          // this.options[2].info++
+          // 组织商品信息对象
+          // { goods_id, goods_name, goods_price, goods_count, goods_small_logo, goods_state }
+          const goods = {
+            goods_id: this.goods_info.goods_id,
+            goods_name: this.goods_info.goods_name,
+            goods_price: this.goods_info.goods_price,
+            goods_count: 1, //商品数量
+            goods_small_logo: this.goods_info.goods_small_logo,
+            goods_state: true, //商品勾选状态
+          }
+          //通过 this 调用映射过来的 addToCart 方法，把商品信息对象存储到购物车中
+          this.addToCart(goods)
         }
       }
     },
@@ -148,7 +194,7 @@
 
       .goods-name {
         font-size: 14px;
-        border-right: 1px solid #ddd;
+        // border-right: 1px solid #ddd;
         padding-right: 10px;
         font-weight: 700px;
       }
@@ -157,6 +203,7 @@
         display: flex;
         flex-direction: column;
         padding: 0 15px;
+        border-left: 1px solid #ddd;
         align-items: center;
         justify-content: center;
 
@@ -175,10 +222,14 @@
       padding: 5px 0;
     }
   }
-
+.goods-detail-bar{
+  padding: 10px;
+  text-align: center;
+  color: #ddd;
+}
   .goods-nav {
     // 粘性定位
-    position:sticky;
+    position: sticky;
     bottom: 0;
     z-index: 999;
   }

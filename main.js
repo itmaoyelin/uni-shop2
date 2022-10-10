@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-
+//导入store
+import store from './store/store.js'
 //导入网络请求的包
  import { $http } from '@escook/request-miniprogram'
  // 在 uni-app 项目中，可以把 $http 挂载到 uni 顶级对象之上，方便全局调用
@@ -37,6 +38,8 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
-	...App
+	...App,
+  //挂载store
+  store
 })
 app.$mount()
