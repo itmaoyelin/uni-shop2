@@ -77,8 +77,8 @@
         // 更新 vuex 中的 token
        // this.updateToken(loginResult.message.token)
        //先模拟一个假token
-       // const token='Bearer'+' '+ 'maoyelin'+res.code
-       const token='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo'
+       const token='Bearer'+' '+ 'maoyelin'+res.code
+       // const token='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo'
        // 更新 vuex 中的 token
        this.updateToken(token)
        //如果 redirectInfo重定向对象不为 null，则登录成功之后，需要重新导航到对应的页面
