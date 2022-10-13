@@ -23,7 +23,7 @@ import store from './store/store.js'
        Authorization: store.state.m_user.token,
      }
    }
-   // console.log(options)
+   console.log(options)
    needLoadingRequestCount=1
  }
  //隐藏loading(响应拦截器)
